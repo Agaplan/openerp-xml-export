@@ -1,0 +1,298 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<record id="xml_export_form_view" model="ir.ui.view">
+		<field name="name">xml.export.view.form</field>
+		<field name="model">xml.export</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="XML Export Definitions">
+				<field name="name" colspan="4"/>
+				<field name="validation_type"/>
+				<field name="validation_file"/>
+				<field name="namespace"/>
+				<field name="schema"/>
+				<field name="root"/>
+				<notebook colspan="4">
+					<page string="Fields">
+						<field name="field_ids" colspan="4" nolabel="1">
+							<form string="Fields">
+								<field name="name"/>
+								<field name="xml_path"/>
+								<field name="parent_id"/>
+								<field name="sequence"/>
+								<notebook colspan="4">
+									<page string="Definition">
+										<field name="type"/>
+										<field name="length"/>
+										<field name="min_qty"/>
+										<field name="max_qty"/>
+									</page>
+									<page string="Description">
+										<field name="description" colspan="4" nolabel="1"/>
+									</page>
+									<page string="Children">
+										<field name="child_ids" colspan="4" nolabel="1"/>
+									</page>
+								</notebook>
+							</form>
+							<tree string="Fields" colors="red:min_qty&gt;0">
+								<field name="name"/>
+								<field name="parent_id"/>
+								<field name="sequence"/>
+								<field name="xml_path"/>
+								<field name="type"/>
+								<field name="length"/>
+								<field name="min_qty"/>
+								<field name="max_qty"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Header/Footer">
+						<field name="head_xml" colspan="4"/>
+						<field name="feet_xml" colspan="4"/>
+					</page>
+				</notebook>
+				<field name="state"/>
+			</form>
+		</field>
+	</record>
+
+	<record id="xml_export_tree_view" model="ir.ui.view">
+		<field name="name">xml.export.tree.form</field>
+		<field name="model">xml.export</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="XML Export Definitions">
+				<field name="name"/>
+				<field name="validation_type"/>
+				<field name="namespace"/>
+				<field name="schema"/>
+				<field name="root"/>
+				<field name="field_ids"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="xml_export_action" model="ir.actions.act_window">
+		<field name="name">XML Export Definitions</field>
+		<field name="res_model">xml.export</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="xml_menu"
+		parent="base.menu_config"
+		name="XML Export"
+		/>
+
+	<menuitem id="xml_export_menu"
+		parent="xml_menu"
+		action="xml_export_action"
+		/>
+
+	<record id="xml_field_search_view" model="ir.ui.view">
+		<field name="name">xml.export.field.search</field>
+		<field name="model">xml.export.field</field>
+		<field name="type">search</field>
+		<field name="arch" type="xml">
+			<search string="Search Export fields">
+				<group colspan="4" col="10">
+					<filter name="text_type" string="Text" domain="[('type','=','text')]"/>
+					<filter name="decimal_type" string="Decimal" domain="[('type','=','decimal')]"/>
+					<filter name="choice_type" string="Choice" domain="[('type','=','choice')]"/>
+					<filter name="empty_type" string="Empty" domain="[('type','in','empty')]"/>
+					<separator orientation="vertical"/>
+					<field name="export_id" widget="selection"/>
+					<field name="name"/>
+					<field name="parent_id"/>
+					<field name="type"/>
+				</group>
+				<newline/>
+				<group expand="0" string="Group By...">
+					<filter string="Type" context="{'group_by': 'type'}"/>
+					<filter string="Export" context="{'group_by': 'export_id'}"/>
+					<filter string="Parent" context="{'group_by': 'parent_id'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="xml_field_form_view" model="ir.ui.view">
+		<field name="name">xml.export.field.form</field>
+		<field name="model">xml.export.field</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Export Fields">
+				<field name="export_id" colspan="4"/>
+				<field name="name"/>
+				<field name="xml_path"/>
+				<field name="parent_id"/>
+				<field name="sequence"/>
+				<notebook colspan="4">
+					<page string="Definition">
+						<field name="type"/>
+						<field name="length"/>
+						<field name="min_qty"/>
+						<field name="max_qty"/>
+					</page>
+					<page string="Description">
+						<field name="description" colspan="4" nolabel="1"/>
+					</page>
+					<page string="Children">
+						<field name="child_ids" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record id="xml_field_tree_view" model="ir.ui.view">
+		<field name="name">xml.export.field.tree</field>
+		<field name="model">xml.export.field</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Export Fields" colors="red:min_qty&gt;0">
+				<field name="export_id"/>
+				<field name="name"/>
+				<field name="parent_id"/>
+				<field name="type"/>
+				<field name="length"/>
+				<field name="min_qty"/>
+				<field name="max_qty"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="xml_profile_form" model="ir.ui.view">
+		<field name="name">xml.profile.form</field>
+		<field name="model">xml.profile</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Export Profile">
+				<field name="name"/>
+				<field name="export_id"/>
+				<button name="action_fill" type="object" string="Fill profile" colspan="2"/>
+				<button name="%(xml_export_wizard_action)d" type="action" string="Perform Export" colspan="2" context="{'xml_profile': active_id, 'manual': True}"/>
+				<notebook colspan="4">
+					<page string="Lines">
+						<field name="lines" colspan="4" nolabel="1" view_mode="tree,form">
+							<form string="Lines">
+								<notebook colspan="4">
+									<page string="Mapping">
+										<field name="action" colspan="4"/>
+										<separator string="From" colspan="4"/>
+										<field name="openerp_field" colspan="4"
+											attrs="{'invisible': [('action','in',['repeat'])], 'required': [('action','in',['field','repeat_sub'])]}"/>
+										<field name="openerp_model" colspan="4"
+											attrs="{'invisible': [('action','in',['repeat_sub','compute','field'])], 'required': [('action','in',['repeat'])]}"/>
+										<separator string="To" colspan="4"/>
+										<field name="xml_field" colspan="4"/>
+										<separator string="Code" colspan="4"/>
+										<field name="code" colspan="4" nolabel="1"/>
+										<separator string="Inclusion Code" colspan="4"/>
+										<field name="include_code" colspan="4" nolabel="1"/>
+									</page>
+									<page string="Notes">
+										<field name="notes" colspan="4" nolabel="1"/>
+									</page>
+								</notebook>
+							</form>
+							<tree string="Lines">
+								<field name="sequence"/>
+								<field name="action"/>
+								<field name="openerp_model"/>
+								<field name="openerp_field"/>
+								<field name="xml_field"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Description">
+						<field name="description" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record id="xml_profile_tree" model="ir.ui.view">
+		<field name="name">xml.profile.tree</field>
+		<field name="model">xml.profile</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Export Profile">
+				<field name="name"/>
+				<field name="export_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="xml_profile_action" model="ir.actions.act_window">
+		<field name="name">Export Profile</field>
+		<field name="res_model">xml.profile</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help">This is a list of all exports profiles, each profile uses one definition and then takes a data model and combines them to a valid xml file.</field>
+	</record>
+
+	<menuitem id="xml_profile_menu"
+		parent="xml_menu"
+		action="xml_profile_action"
+		/>
+
+	<record id="xml_profile_line_form" model="ir.ui.view">
+		<field name="name">xml.profile.line.form</field>
+		<field name="model">xml.profile.line</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Profile lines">
+				<field name="profile_id"/>
+				<field name="sequence"/>
+				<notebook colspan="4">
+					<page string="Mapping">
+						<field name="action" colspan="4"/>
+						<separator string="From" colspan="4"/>
+						<field name="openerp_field" colspan="4"
+							attrs="{'invisible': [('action','in',['repeat'])]}"/>
+						<field name="openerp_model" colspan="4"
+							attrs="{'invisible': [('action','in',['repeat_sub','compute','field'])]}"/>
+						<separator string="To" colspan="4"/>
+						<field name="xml_field" colspan="4"/>
+						<separator string="Code" colspan="4"/>
+						<field name="coder" colspan="4" nolabel="1"/>
+					</page>
+					<page string="Notes">
+						<field name="notes" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record id="xml_profile_line_tree" model="ir.ui.view">
+		<field name="name">xml.profile.line.tree</field>
+		<field name="model">xml.profile.line</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Profile lines">
+				<field name="profile_id"/>
+				<field name="sequence"/>
+				<field name="action"/>
+				<field name="openerp_field"/>
+				<field name="openerp_model"/>
+				<field name="xml_field"/>
+			</tree>
+		</field>
+	</record>
+
+	<act_window id="xml_export_show_profiles"
+		name="Show profiles"
+		res_model="xml.profile"
+		src_model="xml.export"
+		domain="[('export_id','=',active_id)]"
+		/>
+
+</data>
+</openerp>
