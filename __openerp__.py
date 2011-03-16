@@ -16,8 +16,9 @@
     ],
     'init_xml': [],
     'update_xml': [
-        'views/xml_export_view.xml',
         'wizard/xml_export_wizard_view.xml',
+        'views/xml_export_view.xml',
+        'security/ir.model.access.csv',
     ],
     'demo_xml': [],
     'test': [],

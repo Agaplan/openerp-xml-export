@@ -1,0 +1,10 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_xml_export_model_admin","xml_export model admin","xml_export.model_xml_export","base.group_system",1,1,1,1
+"access_xml_export_field_model_admin","xml_export_field model admin","xml_export.model_xml_export_field","base.group_system",1,1,1,1
+"access_xml_export_profile_admin","xml_export profile admin","xml_export.model_xml_profile","base.group_system",1,1,1,1
+"access_xml_export_profile_line_admin","xml_export profile line admin","xml_export.model_xml_profile_line","base.group_system",1,1,1,1
+"access_xml_export_wizard_admin","xml_export wizard admin","xml_export.model_xml_export_wizard","base.group_system",1,1,1,1
+"access_xml_export_model_user","xml_export model user","xml_export.model_xml_export","base.group_user",1,0,0,0
+"access_xml_export_field_model_user","xml_export_field model user","xml_export.model_xml_export_field","base.group_user",1,0,0,0
+"access_xml_export_profile_user","xml_export profile user","xml_export.model_xml_profile","base.group_user",1,0,0,0
+"access_xml_export_profile_line_user","xml_export profile line user","xml_export.model_xml_profile_line","base.group_user",1,0,0,0
