@@ -182,12 +182,11 @@ class xml_export_wizard(osv.osv_memory):
 
         if schema:
             status = schema.validate( etree.fromstring( xml_data ) )
-            print "Validation status:",status
             if not status:
                 errors = "\n".join([str(x) for x in schema.error_log])
 
         self.write(cr, uid, ids, {
-            'data_xml': base64.b64encode(xml_data),
+            'data_xml': base64.b64encode(xml_data.encode('utf8')),
             'errors': errors,
         }, context=context)
         return True
